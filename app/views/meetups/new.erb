@@ -1,1 +1,11 @@
 <h1>Make Your Meetup!</h1>
+
+<form action="/meetups/new" method="post">
+  <label for="meetup_name">Name Your Meetup:</label>
+  <input type="text" name="meetup_name" id="meetup_name" value="<%= @old_name %>">
+  <label for="meetup_location">Location:</label>
+  <input type="text" name="meetup_location" id="meetup_location">
+  <label for="meetup_description">Description:</label>
+  <input type="text" name="meetup_description" id="meetup_description">
+  <input type="submit" value="Submit">
+</form>

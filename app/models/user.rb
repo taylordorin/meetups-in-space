@@ -12,7 +12,9 @@ class User < ActiveRecord::Base
     end
   end
 
+  has_many :meetups
+  has_many :members
+  has_many :meetups,
+  through: :members
 
-
-  
 end

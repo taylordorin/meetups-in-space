@@ -1,6 +1,7 @@
 require 'sinatra'
 require "active_record"
 require_relative 'config/application'
+require "pry"
 
 set :bind, '0.0.0.0'  # bind to all interfaces
 
@@ -12,7 +13,13 @@ helpers do
     end
     @current_user
   end
+
+  def old_form
+
+  end
+
 end
+
 
 get '/' do
   redirect '/meetups'
@@ -34,15 +41,45 @@ get '/sign_out' do
 end
 
 get '/meetups' do
+  @meetups = Meetup.order(:name)
   erb :'meetups/index'
 end
 
 get '/meetups/new' do
+
   erb :'meetups/new'
 end
 
 get '/meetups/:id' do
-  @id = params[:id]
+  @meetup = Meetup.find(params[:id])
 
   erb :'meetups/show'
+end
+
+post '/meetups/new' do
+  @meetup_name = params[:meetup_name]
+  @meetup_location = params[:meetup_location]
+  @meetup_description = params[:meetup_description]
+  @user = current_user
+
+
+  new_meetup = Meetup.new(
+    name: @meetup_name,
+    location: @meetup_location,
+    description: @meetup_description,
+    user: @user
+  )
+
+  if new_meetup.valid?
+    new_meetup.save
+    redirect "/meetups/#{new_meetup.id}"
+  else
+    @error = new_meetup.errors.full_messages
+    # @error.each do |er|
+    #   flash[:notice] = er
+    # end
+
+    flash[:notice] = "Please fill in all fields"
+    redirect "/meetups/new"
+  end
 end

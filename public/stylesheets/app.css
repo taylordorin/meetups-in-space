@@ -38,3 +38,11 @@ a:visited {
   padding: 1em;
   background-color: #3B9089;
 }
+
+img {
+  max-width: 200px;
+}
+
+input, textarea {
+  color: black;
+}

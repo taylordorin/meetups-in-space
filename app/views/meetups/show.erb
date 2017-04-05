@@ -1,1 +1,14 @@
-<h1>Name Goes Here</h1>
+<h1><%= @meetup.name %> </h1>
+<h3>Location: <%= @meetup.location %> </h3>
+<h3>Description: <%= @meetup.description %> </h3>
+Created by: <%= @meetup.user.username %>
+<br/>
+<button type="button">JOIN</button>
+<br/>
+<br/>
+Members:
+<ul>
+  <% @meetup.users.each do |person| %>
+    <li><%= person.username %> <img src="<%=person.avatar_url%>" /></li>
+  <% end %>
+</ul>
